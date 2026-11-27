@@ -1,92 +1,85 @@
-import { BRAND, SUPPORT_EMAIL, SUPPORT_HOURS, SUPPORT_WHATSAPP } from '../content';
+import { BRAND, NAV, SUPPORT_EMAIL, SUPPORT_HOURS, SUPPORT_WHATSAPP, TAGLINE } from '../content';
+import { LEGAL_DOCS } from '../content/legal';
 import { openCookiePreferences } from '../lib/consent';
 import { Link } from '../lib/router';
-import { BrandMark } from './Icons';
+import { Icon } from './Icons';
 
-type Props = {
-  onOpenLead: (planId?: string) => void;
-};
-
-export function Footer({ onOpenLead }: Props) {
-  const year = new Date().getFullYear();
-
+export function Footer() {
   return (
-    <footer className="footer">
+    <footer className="ftr">
       <div className="wrap">
-        <div className="footer__grid">
-          <div className="footer__about">
-            <span className="brand">
-              <span className="brand__mark">
-                <BrandMark />
-              </span>
-              <span>{BRAND}</span>
+        <div className="ftr__grid">
+          <div className="ftr__brand">
+            <span className="brand__mark" aria-hidden="true">
+              <Icon name="ball" />
             </span>
-            <p>
-              Grupo de análises esportivas e educação sobre leitura de mercado. Conteúdo para maiores de 18 anos, sem
-              promessa de lucro.
-            </p>
-            <p style={{ marginTop: 10 }}>
-              {SUPPORT_EMAIL}
-              <br />
-              WhatsApp {SUPPORT_WHATSAPP} · {SUPPORT_HOURS}
-            </p>
-          </div>
-
-          <div>
-            <h4>Produto</h4>
-            <div className="footer__links">
-              <a href="#como-funciona">Como funciona</a>
-              <a href="#incluido">O que você recebe</a>
-              <a href="#planos">Planos</a>
-              <a href="#duvidas">Dúvidas</a>
-              <button type="button" onClick={() => onOpenLead('trimestral')}>
-                Falar com a equipe
-              </button>
+            <div>
+              <p className="ftr__name">{BRAND}</p>
+              <p className="ftr__about">{TAGLINE}. Acesso permanente ao grupo, com pagamento único.</p>
             </div>
           </div>
 
-          <div>
-            <h4>Legal</h4>
-            <div className="footer__links">
-              <Link to="/termos">Termos de uso</Link>
-              <Link to="/privacidade">Política de privacidade</Link>
-              <Link to="/cookies">Política de cookies</Link>
-              <Link to="/jogo-responsavel">Jogo responsável</Link>
-            </div>
-          </div>
+          <nav className="ftr__col" aria-label="Seções">
+            <p className="ftr__title">Navegação</p>
+            <ul className="ftr__list">
+              {NAV.map((item) => (
+                <li key={item.href}>
+                  <a className="ftr__link" href={item.href}>
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-          <div>
-            <h4>Privacidade</h4>
-            <div className="footer__links">
-              <button type="button" onClick={openCookiePreferences}>
-                Preferências de cookies
-              </button>
-              <a href="https://www.gov.br/anpd/pt-br" target="_blank" rel="noopener noreferrer">
-                ANPD
-              </a>
-              <a href="https://www.cvv.org.br" target="_blank" rel="noopener noreferrer">
-                CVV · 188
-              </a>
-              <a href="https://jogadoresanonimos.org.br" target="_blank" rel="noopener noreferrer">
-                Jogadores Anônimos
-              </a>
-            </div>
+          <nav className="ftr__col" aria-label="Documentos legais">
+            <p className="ftr__title">Documentos</p>
+            <ul className="ftr__list">
+              {LEGAL_DOCS.map((doc) => (
+                <li key={doc.slug}>
+                  <Link className="ftr__link" to={`/${doc.slug}`}>
+                    {doc.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="ftr__col">
+            <p className="ftr__title">Contato</p>
+            <ul className="ftr__list">
+              <li className="ftr__contact">
+                <Icon name="mail" />
+                <a className="ftr__link" href={`mailto:${SUPPORT_EMAIL}`}>
+                  {SUPPORT_EMAIL}
+                </a>
+              </li>
+              <li className="ftr__contact">
+                <Icon name="users" />
+                <span>{SUPPORT_WHATSAPP}</span>
+              </li>
+              <li className="ftr__contact">
+                <Icon name="lock" />
+                <span>{SUPPORT_HOURS}</span>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <p className="footer__disclaimer">
-          <strong>Aviso de risco:</strong> apostas esportivas envolvem risco real de perda financeira. Este site e o
-          grupo {BRAND} oferecem conteúdo informativo e educacional; não somos casa de apostas, não recebemos depósitos,
-          não operamos apostas e não garantimos qualquer resultado, ganho ou retorno. Resultados passados não garantem
-          resultados futuros. Proibido para menores de 18 anos. Se o jogo deixou de ser diversão, procure ajuda: CVV 188
-          (24h) ou Jogadores Anônimos Brasil.
-        </p>
+        <div className="ftr__bottom">
+          <p className="ftr__note">
+            © {new Date().getFullYear()} {BRAND}. Conteúdo destinado a maiores de 18 anos. Não há promessa de ganho.
+            Apostas envolvem risco de perda financeira.
+          </p>
 
-        <div className="footer__bottom">
-          <span>
-            © {year} {BRAND}. Todos os direitos reservados.
-          </span>
-          <span>CNPJ 00.000.000/0001-00 · São Paulo/SP</span>
+          <div className="ftr__legal">
+            <button type="button" className="btn btn--link" onClick={openCookiePreferences}>
+              Preferências de cookies
+            </button>
+            <a className="btn btn--link" href="https://www.cvv.org.br" target="_blank" rel="noopener noreferrer">
+              CVV · 188
+            </a>
+          </div>
         </div>
       </div>
     </footer>

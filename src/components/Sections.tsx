@@ -1,48 +1,65 @@
-import {
-  FEATURES,
-  NOT_PROMISE,
-  RECEIVE,
-  SAMPLE_ANALYSES,
-  STEPS,
-  TESTIMONIALS,
-  TICKER,
-} from '../content';
-import { Icon, Star } from './Icons';
+import { CHECKOUT_URL, CTA_LABEL, PLAN, TESTIMONIALS } from '../content';
+import { Icon, type IconName } from './Icons';
 
-export function Ticker() {
-  const items = [...TICKER, ...TICKER];
-  return (
-    <div className="ticker" aria-hidden="true">
-      <div className="ticker__track">
-        {items.map((item, index) => (
-          <span className="ticker__item" key={`${item}-${index}`}>
-            {item}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
+type Feature = { icon: IconName; title: string; text: string };
 
-export function Features() {
+const FEATURES: Feature[] = [
+  {
+    icon: 'users',
+    title: 'Palpites no grupo',
+    text: 'Os palpites esportivos publicados no grupo ficam disponíveis para consulta dos participantes.',
+  },
+  {
+    icon: 'chart',
+    title: 'Análises dos jogos',
+    text: 'Cada palpite vem acompanhado da análise do confronto, com o raciocínio que sustenta a leitura.',
+  },
+  {
+    icon: 'lock',
+    title: 'Acesso permanente',
+    text: 'Você entra uma vez e continua no grupo. Não existe renovação mensal nem prazo de validade.',
+  },
+  {
+    icon: 'check',
+    title: 'Pagamento único',
+    text: 'R$ 32,99 uma única vez, no checkout da Sunize. Sem assinatura e sem cobrança recorrente.',
+  },
+];
+
+const STEPS = [
+  {
+    title: 'Clique em “QUERO ENTRAR NO GRUPO”',
+    text: 'O botão abre a página de pagamento do plano permanente.',
+  },
+  {
+    title: 'Pague R$ 32,99 uma única vez',
+    text: 'O pagamento é processado na página segura da Sunize.',
+  },
+  {
+    title: 'Receba o acesso ao grupo',
+    text: 'Depois da confirmação do pagamento, você recebe as instruções para entrar no grupo.',
+  },
+];
+
+export function WhatYouGet() {
   return (
-    <section className="section" id="incluido" aria-labelledby="features-title">
+    <section className="section" id="conteudo">
       <div className="wrap">
-        <div className="section__head reveal">
-          <span className="eyebrow">O que você recebe</span>
-          <h2 className="h2" id="features-title">
-            Estrutura de estudo, não sorte
-          </h2>
+        <header className="sec-head">
+          <span className="eyebrow">
+            <Icon name="ball" /> O que você recebe
+          </span>
+          <h2>Tudo reunido em um grupo só</h2>
           <p className="lead">
-            O grupo existe para você aprender a ler um jogo com critério. Cada publicação é explicada — inclusive quando
-            a leitura não se confirma.
+            Um espaço para acompanhar palpites esportivos e as análises que explicam cada leitura de jogo — com acesso
+            permanente e sem mensalidade.
           </p>
-        </div>
+        </header>
 
-        <div className="grid">
+        <div className="features">
           {FEATURES.map((feature) => (
-            <article className="feature reveal" key={feature.title}>
-              <span className="feature__icon">
+            <article className="feature" key={feature.title}>
+              <span className="feature__icon" aria-hidden="true">
                 <Icon name={feature.icon} />
               </span>
               <h3>{feature.title}</h3>
@@ -57,242 +74,122 @@ export function Features() {
 
 export function HowItWorks() {
   return (
-    <section className="section" id="como-funciona" aria-labelledby="steps-title">
+    <section className="section section--alt" id="como-funciona">
       <div className="wrap">
-        <div className="section__head reveal">
-          <span className="eyebrow">Como funciona</span>
-          <h2 className="h2" id="steps-title">
-            Três passos e você está dentro
-          </h2>
-          <p className="lead">
-            Sem call de vendas, sem promessa milagrosa e sem enrolação. Escolheu o plano, recebeu o convite, começou a
-            estudar.
-          </p>
-        </div>
+        <header className="sec-head">
+          <span className="eyebrow">
+            <Icon name="lock" /> Como funciona
+          </span>
+          <h2>Da compra ao grupo em três passos</h2>
+          <p className="lead">Sem cadastro neste site: a compra é concluída direto na página de pagamento.</p>
+        </header>
 
-        <div className="steps">
-          {STEPS.map((step) => (
-            <article className="step reveal" key={step.n}>
-              <span className="step__n">PASSO {step.n}</span>
+        <ol className="steps">
+          {STEPS.map((step, index) => (
+            <li className="step" key={step.title}>
+              <span className="step__num" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
               <h3>{step.title}</h3>
               <p>{step.text}</p>
-            </article>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );
 }
 
-export function Compare() {
+export function Reviews() {
+  const count = TESTIMONIALS.length;
+
   return (
-    <section className="section" id="transparencia" aria-labelledby="compare-title">
+    <section className="section" id="avaliacoes">
       <div className="wrap">
-        <div className="section__head section__head--center reveal">
-          <span className="eyebrow">Transparência</span>
-          <h2 className="h2" id="compare-title">
-            O que está e o que não está no combinado
-          </h2>
-          <p className="lead">
-            Deixamos tudo explícito antes da compra. É melhor você saber exatamente o que está comprando.
-          </p>
-        </div>
-
-        <div className="grid grid--2">
-          <div className="compare compare--yes reveal">
-            <h3 className="compare__title">
-              <Icon name="check" strokeWidth={2.4} />
-              O que você recebe
-            </h3>
-            <ul>
-              {RECEIVE.map((item) => (
-                <li key={item}>
-                  <Icon name="check" strokeWidth={2.6} />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="compare compare--no reveal">
-            <h3 className="compare__title">
-              <Icon name="alert" />
-              O que não prometemos
-            </h3>
-            <ul>
-              {NOT_PROMISE.map((item) => (
-                <li key={item}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" aria-hidden="true">
-                    <path d="M6 6l12 12M18 6L6 18" />
-                  </svg>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function Samples() {
-  return (
-    <section className="section" id="exemplos" aria-labelledby="samples-title">
-      <div className="wrap">
-        <div className="section__head reveal">
-          <span className="eyebrow">Por dentro do grupo</span>
-          <h2 className="h2" id="samples-title">
-            Como é uma análise por dentro
-          </h2>
-          <p className="lead">
-            Três exemplos da estrutura que publicamos todos os dias: o mercado estudado, os números que sustentam a
-            leitura e o risco envolvido. Os nomes dos times são ilustrativos.
-          </p>
-        </div>
-
-        <div className="grid">
-          {SAMPLE_ANALYSES.map((sample, index) => (
-            <article className="sample reveal" key={`${sample.league}-${index}`}>
-              <div className="sample__head">
-                <div>
-                  <p className="sample__league">{sample.league}</p>
-                  <h3>{sample.match}</h3>
-                  <p className="sample__market">
-                    {sample.time} · {sample.market}
-                  </p>
-                </div>
-                <span className="chip">Exemplo</span>
-              </div>
-
-              <p className="metric__label">{sample.readLabel}</p>
-
-              <div className="sample__metrics">
-                {sample.metrics.map((metric) => (
-                  <div key={metric.label}>
-                    <div className="metric__row">
-                      <span className="metric__label">{metric.label}</span>
-                      <span className="metric__hint">{metric.hint}</span>
-                    </div>
-                    <div className="metric__track" role="img" aria-label={`${metric.label}: ${metric.value} de 100`}>
-                      <div className="metric__fill" style={{ width: `${metric.value}%` }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <p className="sample__note">{sample.note}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function Testimonials() {
-  return (
-    <section className="section" aria-labelledby="quotes-title">
-      <div className="wrap">
-        <div className="section__head reveal">
-          <span className="eyebrow">Quem já participa</span>
-          <h2 className="h2" id="quotes-title">
-            Relatos sobre o método, não sobre dinheiro
-          </h2>
-          <p className="lead">
-            Reunimos depoimentos sobre organização, clareza e gestão de risco. Nenhum deles é promessa de resultado.
-          </p>
-        </div>
-
-        <div className="grid">
-          {TESTIMONIALS.map((testimonial) => (
-            <article className="quote reveal" key={testimonial.name}>
-              <div className="quote__stars" aria-hidden="true">
-                <Star />
-                <Star />
-                <Star />
-                <Star />
-                <Star />
-              </div>
-              <p>“{testimonial.text}”</p>
-              <footer>
-                <span className="quote__avatar" aria-hidden="true">
-                  {testimonial.name.slice(0, 1)}
-                </span>
-                <span>
-                  <span className="quote__name">{testimonial.name}</span>
-                  <br />
-                  <span className="quote__role">{testimonial.role}</span>
-                </span>
-              </footer>
-            </article>
-          ))}
-        </div>
-
-        <p className="plans__foot">
-          Depoimentos de assinantes identificados por iniciais, com autorização de uso. São experiências individuais e não
-          representam garantia de resultado para outros assinantes.
-        </p>
-      </div>
-    </section>
-  );
-}
-
-export function CtaBand({ onOpenLead }: { onOpenLead: (planId?: string) => void }) {
-  return (
-    <section className="section section--tight" aria-labelledby="cta-title">
-      <div className="wrap">
-        <div className="cta-band reveal">
-          <h2 id="cta-title">Comece a estudar com método — sem ilusão de dinheiro fácil</h2>
-          <p>
-            Acesso imediato ao grupo, material de gestão de banca e 7 dias de garantia de arrependimento. Se não fizer
-            sentido para você, devolvemos o valor integral.
-          </p>
-          <div className="cta-band__actions">
-            <button type="button" className="btn btn--primary" onClick={() => onOpenLead('trimestral')}>
-              Quero entrar no grupo
-              <Icon name="arrow" />
-            </button>
-            <a href="#planos" className="btn btn--ghost">
-              Comparar planos
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function LegalCallout() {
-  return (
-    <section className="section section--tight" aria-labelledby="legal-title">
-      <div className="wrap">
-        <div className="legal-callout reveal">
-          <span className="legal-callout__head">
-            <Icon name="alert" />
-            Aviso importante · jogo responsável
+        <header className="sec-head">
+          <span className="eyebrow">
+            <Icon name="star" /> Avaliações
           </span>
-          <h2 id="legal-title">Este produto não garante ganhos</h2>
-          <p>
-            Apostas esportivas são atividade de risco e podem gerar perda financeira. O Nexo Palpites é um serviço de
-            conteúdo, análise e educação esportiva: não é casa de apostas, não recebe depósitos, não opera apostas e não
-            administra banca de terceiros. Nenhuma análise aqui publicada é promessa, garantia ou projeção de lucro.
-            Resultados passados não garantem resultados futuros. Conteúdo destinado exclusivamente a maiores de 18 anos.
+          <h2>O que dizem os participantes</h2>
+          <p className="lead">
+            Esta área reúne avaliações de quem já participa do grupo. Só publicamos depoimentos reais, enviados pelos
+            próprios participantes.
           </p>
-          <p>
-            Aposte apenas valores que você pode perder sem comprometer sua vida financeira. Se o jogo deixou de ser
-            diversão, procure ajuda.
-          </p>
-          <div className="legal-callout__links">
-            <a href="https://www.cvv.org.br" target="_blank" rel="noopener noreferrer">
-              CVV · 188 (24h)
-            </a>
-            <a href="https://jogadoresanonimos.org.br" target="_blank" rel="noopener noreferrer">
-              Jogadores Anônimos
-            </a>
-            <a href="/jogo-responsavel">Jogo responsável</a>
-            <a href="/termos">Termos de uso</a>
+        </header>
+
+        {count === 0 ? (
+          <div className="reviews__empty">
+            <div className="stars" role="img" aria-label="Sem avaliações publicadas">
+              {[0, 1, 2, 3, 4].map((index) => (
+                <Icon name="starOutline" key={index} />
+              ))}
+            </div>
+
+            <h3>Ainda não há avaliações publicadas</h3>
+            <p>
+              Nenhum depoimento foi criado ou simulado para este site. Quando as primeiras avaliações verdadeiras forem
+              enviadas por participantes, elas aparecem aqui com a nota e o comentário.
+            </p>
+            <p className="reviews__hint">Já participa do grupo? Sua avaliação pode ser publicada nesta seção.</p>
           </div>
+        ) : (
+          <div className="reviews__grid">
+            {TESTIMONIALS.map((item) => (
+              <article className="review" key={`${item.name}-${item.date}`}>
+                <div className="stars" role="img" aria-label={`${item.rating} de 5 estrelas`}>
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Icon name={star <= item.rating ? 'star' : 'starOutline'} key={star} />
+                  ))}
+                </div>
+                <p className="review__text">{item.text}</p>
+                <footer className="review__head">
+                  <strong className="review__name">{item.name}</strong>
+                  <span className="review__date">{item.date}</span>
+                </footer>
+              </article>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+export function FinalCta() {
+  return (
+    <section className="section section--tight">
+      <div className="wrap">
+        <div className="cta-band">
+          <div className="cta-band__inner">
+            <h2>Entre no grupo com acesso permanente</h2>
+            <p>
+              {PLAN.name} · {PLAN.price} em pagamento único. Você paga uma vez e continua com acesso ao grupo.
+            </p>
+            <a className="btn btn--primary" href={CHECKOUT_URL}>
+              {CTA_LABEL}
+            </a>
+            <p className="cta-band__note">Conteúdo para maiores de 18 anos. Não há promessa de ganho.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function RiskNote() {
+  return (
+    <section className="risk">
+      <div className="wrap risk__inner">
+        <span className="risk__icon" aria-hidden="true">
+          <Icon name="alert" />
+        </span>
+        <div>
+          <h2 className="risk__title">Aviso importante</h2>
+          <p>
+            Este site divulga palpites e análises esportivas. Não somos casa de apostas e não garantimos acerto, lucro ou
+            qualquer resultado. Apostas envolvem risco de perda financeira: use apenas valor que você pode perder. O
+            conteúdo é destinado a maiores de 18 anos.
+          </p>
         </div>
       </div>
     </section>
