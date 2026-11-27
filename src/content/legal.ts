@@ -97,7 +97,6 @@ export const LEGAL_DOCS: LegalDoc[] = [
           'Informação sobre compartilhamentos e sobre a possibilidade de não consentir.',
           'Revogação do consentimento.',
         ],
-        paragraphs2: [],
       },
       {
         title: '9. Como exercer seus direitos',
