@@ -1,108 +1,79 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AgeGate, readAge, writeAge, type AgeState } from './components/AgeGate';
 import { CookieConsent } from './components/CookieConsent';
 import { Faq } from './components/Faq';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
-import { LeadModal } from './components/LeadModal';
 import { LegalPage } from './components/LegalPage';
-import { Plans } from './components/Plans';
-import {
-  Compare,
-  CtaBand,
-  Features,
-  HowItWorks,
-  LegalCallout,
-  Samples,
-  Testimonials,
-  Ticker,
-} from './components/Sections';
+import { PlanSection } from './components/Plan';
+import { FinalCta, HowItWorks, Reviews, RiskNote, WhatYouGet } from './components/Sections';
 import { BRAND } from './content';
 import { LEGAL_DOCS } from './content/legal';
 import { useRoute } from './lib/router';
-import { useReveal } from './lib/useReveal';
 
-const LEGAL_ROUTES = LEGAL_DOCS.map((doc) => `/${doc.slug}`);
+const LEGAL_SLUGS = LEGAL_DOCS.map((doc) => doc.slug);
 
 export default function App() {
   const route = useRoute();
-  const [age, setAge] = useState<AgeState>(() => readAge());
-  const [leadOpen, setLeadOpen] = useState(false);
-  const [leadPlan, setLeadPlan] = useState('trimestral');
-
-  const isLegal = LEGAL_ROUTES.includes(route);
-  const gated = !isLegal && age !== 'ok';
-
-  const openLead = useCallback((planId?: string) => {
-    setLeadPlan(planId ?? 'trimestral');
-    setLeadOpen(true);
-  }, []);
-
-  const closeLead = useCallback(() => setLeadOpen(false), []);
-
-  useReveal([route, age]);
+  const [age, setAge] = useState<AgeState>('unknown');
 
   useEffect(() => {
-    if (isLegal) {
-      const doc = LEGAL_DOCS.find((item) => `/${item.slug}` === route);
-      document.title = `${doc?.title ?? 'Documento'} — ${BRAND}`;
-    } else {
-      document.title = `${BRAND} — Grupo de análises esportivas | Conteúdo 18+`;
-    }
-  }, [route, isLegal]);
+    setAge(readAge());
+  }, []);
 
-  const confirmAge = () => {
-    writeAge('ok');
-    setAge('ok');
-  };
+  const slug = route.replace(/^\//, '');
+  const legalDoc = LEGAL_SLUGS.includes(slug) ? LEGAL_DOCS.find((doc) => doc.slug === slug) : undefined;
 
-  const denyAge = () => {
-    if (age === 'denied') {
-      setAge('unknown');
-      return;
-    }
-    writeAge('denied');
-    setAge('denied');
-  };
+  useEffect(() => {
+    document.title = legalDoc ? `${legalDoc.title} — ${BRAND}` : `${BRAND} — Grupo de palpites e análises esportivas`;
+  }, [legalDoc]);
 
-  if (gated) {
-    return <AgeGate state={age} onConfirm={confirmAge} onDeny={denyAge} />;
+  if (age !== 'ok') {
+    return (
+      <AgeGate
+        state={age}
+        onConfirm={() => {
+          writeAge('ok');
+          setAge('ok');
+        }}
+        onDeny={() => {
+          writeAge('denied');
+          setAge('denied');
+        }}
+      />
+    );
+  }
+
+  if (route !== '/' && !legalDoc) {
+    return <LegalPage slug={slug} />;
+  }
+
+  if (legalDoc) {
+    return <LegalPage slug={legalDoc.slug} />;
   }
 
   return (
     <>
-      <a className="skip" href="#conteudo">
+      <a className="skip" href="#main">
         Pular para o conteúdo
       </a>
 
-      {isLegal ? (
-        <>
-          <LegalPage slug={route.slice(1)} />
-          <Footer onOpenLead={openLead} />
-        </>
-      ) : (
-        <>
-          <Header onOpenLead={openLead} />
-          <main id="conteudo">
-            <Hero onOpenLead={openLead} />
-            <Ticker />
-            <Features />
-            <HowItWorks />
-            <Compare />
-            <Samples />
-            <Plans onOpenLead={openLead} />
-            <Testimonials />
-            <Faq />
-            <CtaBand onOpenLead={openLead} />
-            <LegalCallout />
-          </main>
-          <Footer onOpenLead={openLead} />
-        </>
-      )}
+      <Header />
 
+      <main id="main">
+        <Hero />
+        <WhatYouGet />
+        <HowItWorks />
+        <PlanSection />
+        <Reviews />
+        <Faq />
+        <FinalCta />
+        <RiskNote />
+      </main>
+
+      <Footer />
       <CookieConsent />
-      <LeadModal open={leadOpen} planId={leadPlan} onClose={closeLead} />
     </>
   );
 }
