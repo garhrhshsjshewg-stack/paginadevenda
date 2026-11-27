@@ -134,9 +134,12 @@ app.use(
   }),
 );
 
-app.get('*', (req, res, next) => {
+app.use((req, res, next) => {
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ ok: false, error: 'Rota não encontrada.' });
+  }
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
+    return res.status(405).json({ ok: false, error: 'Método não permitido.' });
   }
   const indexFile = path.join(DIST, 'index.html');
   if (!fs.existsSync(indexFile)) {
