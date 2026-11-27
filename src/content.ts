@@ -6,6 +6,12 @@ export const SUPPORT_EMAIL = 'contato@imperiovip.com.br';
 export const SUPPORT_WHATSAPP = '(11) 90000-0000';
 export const SUPPORT_HOURS = 'Seg a Sáb, 9h às 20h';
 
+/** Canal único de suporte ao cliente: Telegram. */
+export const SUPPORT_TELEGRAM_URL = 'https://t.me/SUPIMPERIO';
+export const SUPPORT_TELEGRAM_LABEL = 'FALAR COM O SUPORTE';
+export const SUPPORT_TELEGRAM_TEXT =
+  'Precisa de ajuda ou tem alguma dúvida? Nossa equipe de suporte está disponível pelo Telegram para ajudar você.';
+
 /** Link único de pagamento. Todos os botões de compra da página apontam para cá. */
 export const CHECKOUT_URL = 'https://pay.sunize.com.br/KGPybKel';
 

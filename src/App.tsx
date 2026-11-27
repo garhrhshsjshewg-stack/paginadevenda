@@ -7,7 +7,7 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { LegalPage } from './components/LegalPage';
 import { PlanSection } from './components/Plan';
-import { FinalCta, HowItWorks, Reviews, RiskNote, WhatYouGet } from './components/Sections';
+import { FinalCta, HowItWorks, Reviews, RiskNote, Support, WhatYouGet } from './components/Sections';
 import { BRAND } from './content';
 import { LEGAL_DOCS } from './content/legal';
 import { useRoute } from './lib/router';
@@ -78,6 +78,7 @@ export default function App() {
         <PlanSection />
         <Reviews />
         <Faq />
+        <Support />
         <FinalCta />
         <RiskNote />
       </main>

@@ -12,6 +12,7 @@ export type IconName =
   | 'arrow'
   | 'alert'
   | 'mail'
+  | 'telegram'
   | 'cookie';
 
 const PATHS: Record<IconName, ReactNode> = {
@@ -56,6 +57,12 @@ const PATHS: Record<IconName, ReactNode> = {
     <>
       <rect x="3.2" y="5.6" width="17.6" height="12.8" rx="2.2" />
       <path d="M3.9 6.9l8.1 5.8 8.1-5.8" />
+    </>
+  ),
+  telegram: (
+    <>
+      <path d="M20.7 4.2 3.4 10.4c-.7.3-.7 1.1 0 1.3l4.5 1.5 1.7 4.9c.2.7 1 .8 1.4.3l2.4-2.8 4.3 3.1c.5.4 1.2.1 1.4-.5l2.2-13c.1-.6-.5-1.1-1-.9z" />
+      <path d="M7.9 13.2 19.3 5.5l-8 9.5" />
     </>
   ),
   cookie: (

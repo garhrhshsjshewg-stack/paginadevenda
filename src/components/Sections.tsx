@@ -1,4 +1,12 @@
-import { CHECKOUT_URL, CTA_LABEL, PLAN, TESTIMONIALS } from '../content';
+import {
+  CHECKOUT_URL,
+  CTA_LABEL,
+  PLAN,
+  SUPPORT_TELEGRAM_LABEL,
+  SUPPORT_TELEGRAM_TEXT,
+  SUPPORT_TELEGRAM_URL,
+  TESTIMONIALS,
+} from '../content';
 import { Icon, type IconName } from './Icons';
 
 type Feature = { icon: IconName; title: string; text: string };
@@ -169,6 +177,37 @@ export function FinalCta() {
               {CTA_LABEL}
             </a>
             <p className="cta-band__note">Conteúdo para maiores de 18 anos. Não há promessa de ganho.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function Support() {
+  return (
+    <section className="section" id="suporte">
+      <div className="wrap">
+        <div className="support">
+          <span className="support__icon" aria-hidden="true">
+            <Icon name="telegram" />
+          </span>
+
+          <div className="support__body">
+            <span className="eyebrow">
+              <Icon name="telegram" /> Suporte ao cliente
+            </span>
+            <h2>Atendimento pelo Telegram</h2>
+            <p className="lead">{SUPPORT_TELEGRAM_TEXT}</p>
+            <a
+              className="btn support__btn"
+              href={SUPPORT_TELEGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon name="telegram" />
+              {SUPPORT_TELEGRAM_LABEL}
+            </a>
           </div>
         </div>
       </div>
