@@ -1,56 +1,96 @@
-import type { IconName } from '../content';
+import type { ReactNode } from 'react';
 
-const paths: Record<IconName, string> = {
-  chart: 'M4 19V5m0 14h16M8 15l3-4 3 2 4-6',
-  shield: 'M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3z',
-  book: 'M4 5.5A2.5 2.5 0 016.5 3H19v16H6.5A2.5 2.5 0 004 21.5V5.5zM19 19v2H6.5',
-  wallet: 'M3 8.5A2.5 2.5 0 015.5 6H19a2 2 0 012 2v9a2 2 0 01-2 2H5.5A2.5 2.5 0 013 16.5v-8zM16 12.5h.01',
-  users: 'M16 19v-1.5a4 4 0 00-4-4H7a4 4 0 00-4 4V19M9.5 9.5a3 3 0 100-6 3 3 0 000 6zM21 19v-1.5a4 4 0 00-3-3.87M16.5 3.6a3 3 0 010 5.8',
-  clock: 'M12 21a9 9 0 100-18 9 9 0 000 18zM12 7.5V12l3 2',
-  check: 'M4.5 12.5l5 5 10-11',
-  arrow: 'M5 12h14M13 6l6 6-6 6',
-  cookie: 'M12 21a9 9 0 110-18 4 4 0 004 4 4 4 0 004 4 9 9 0 01-8 10zM9 9.5h.01M8.5 14h.01M13.5 15.5h.01',
-  lock: 'M7 11V8a5 5 0 0110 0v3M5.5 11h13a1.5 1.5 0 011.5 1.5v6A1.5 1.5 0 0118.5 20h-13A1.5 1.5 0 014 18.5v-6A1.5 1.5 0 015.5 11z',
-  alert: 'M12 9v4.5M12 17h.01M10.3 3.9L2.6 17a2 2 0 001.7 3h15.4a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z',
-  heart: 'M12 20s-7-4.3-7-9.2A4 4 0 0112 8a4 4 0 017 2.8C19 15.7 12 20 12 20z',
+export type IconName =
+  | 'check'
+  | 'ball'
+  | 'chart'
+  | 'users'
+  | 'lock'
+  | 'shield'
+  | 'star'
+  | 'starOutline'
+  | 'arrow'
+  | 'alert'
+  | 'mail'
+  | 'cookie';
+
+const PATHS: Record<IconName, ReactNode> = {
+  check: <path d="M20 6.5 9.5 17 4 11.5" />,
+  ball: (
+    <>
+      <circle cx="12" cy="12" r="8.6" />
+      <path d="M12 7.4l3.1 2.2-1.2 3.6h-3.8l-1.2-3.6L12 7.4z" />
+      <path d="M12 3.4v4M20.3 9.6l-3.2 2.1M17.6 19.9l-2.4-3.8M6.4 19.9l2.4-3.8M3.7 9.6l3.2 2.1" />
+    </>
+  ),
+  chart: <path d="M4 19.5V11M9.6 19.5V5M15.2 19.5v-5.4M20.5 19.5H3" />,
+  users: (
+    <>
+      <circle cx="9.2" cy="8.4" r="3.1" />
+      <path d="M3.2 19.6a6 6 0 0 1 12 0" />
+      <path d="M15.6 5.6a3.1 3.1 0 0 1 0 5.8M17.4 19.6a6 6 0 0 0-1.8-4.3" />
+    </>
+  ),
+  lock: (
+    <>
+      <rect x="4.2" y="10.4" width="15.6" height="9.8" rx="2.2" />
+      <path d="M8.2 10.4V8a3.8 3.8 0 0 1 7.6 0v2.4" />
+    </>
+  ),
+  shield: (
+    <>
+      <path d="M12 3.2l7 2.9v5.4c0 4.2-2.9 7.6-7 9.4-4.1-1.8-7-5.2-7-9.4V6.1l7-2.9z" />
+      <path d="M9.2 12.1l2 2 3.7-3.9" />
+    </>
+  ),
+  star: <path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8L3.6 9.7l5.8-.8L12 3.6z" />,
+  starOutline: <path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8L3.6 9.7l5.8-.8L12 3.6z" />,
+  arrow: <path d="M14.5 6.5 9 12l5.5 5.5" />,
+  alert: (
+    <>
+      <path d="M12 4.4l8.4 15.1H3.6L12 4.4z" />
+      <path d="M12 9.8v4.1M12 16.6v.1" />
+    </>
+  ),
+  mail: (
+    <>
+      <rect x="3.2" y="5.6" width="17.6" height="12.8" rx="2.2" />
+      <path d="M3.9 6.9l8.1 5.8 8.1-5.8" />
+    </>
+  ),
+  cookie: (
+    <>
+      <path d="M12 3.4a8.6 8.6 0 1 0 8.6 8.6 3.5 3.5 0 0 1-4.3-4.3A8.6 8.6 0 0 0 12 3.4z" />
+      <circle cx="9" cy="10.2" r=".9" />
+      <circle cx="13.2" cy="13.6" r=".9" />
+      <circle cx="9.4" cy="15" r=".9" />
+    </>
+  ),
 };
 
 type Props = {
   name: IconName;
   className?: string;
-  strokeWidth?: number;
 };
 
-export function Icon({ name, className, strokeWidth = 1.8 }: Props) {
+export function Icon({ name, className }: Props) {
+  const filled = name === 'star';
+
   return (
     <svg
-      className={className}
+      className={className ? `ico ${className}` : 'ico'}
       viewBox="0 0 24 24"
-      fill="none"
+      width="20"
+      height="20"
+      fill={filled ? 'currentColor' : 'none'}
       stroke="currentColor"
-      strokeWidth={strokeWidth}
+      strokeWidth={filled ? 0 : 1.6}
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
       focusable="false"
     >
-      <path d={paths[name]} />
-    </svg>
-  );
-}
-
-export function Star() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-      <path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.6 1.1 6.45L12 17.45 6.2 20.5l1.1-6.45L2.6 9.45l6.5-.95L12 2.6z" />
-    </svg>
-  );
-}
-
-export function BrandMark() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
-      <path d="M5 18V6l14 12V6" />
+      {PATHS[name]}
     </svg>
   );
 }

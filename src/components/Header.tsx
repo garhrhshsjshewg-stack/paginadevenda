@@ -1,97 +1,32 @@
-import { useEffect, useState } from 'react';
-import { BRAND, BRAND_SHORT } from '../content';
-import { BrandMark } from './Icons';
+import { BRAND, CHECKOUT_URL, CTA_LABEL, NAV } from '../content';
+import { Link } from '../lib/router';
+import { Icon } from './Icons';
 
-type Props = {
-  onOpenLead: (planId?: string) => void;
-};
-
-const links = [
-  { href: '#como-funciona', label: 'Como funciona' },
-  { href: '#incluido', label: 'O que você recebe' },
-  { href: '#planos', label: 'Planos' },
-  { href: '#duvidas', label: 'Dúvidas' },
-];
-
-export function Header({ onOpenLead }: Props) {
-  const [stuck, setStuck] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setStuck(window.scrollY > 12);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [open]);
-
+export function Header() {
   return (
-    <header className={`header${stuck ? ' is-stuck' : ''}`}>
-      <div className="wrap">
-        <div className="header__inner">
-          <a href="#topo" className="brand" aria-label={`${BRAND} — início`}>
-            <span className="brand__mark">
-              <BrandMark />
-            </span>
-            <span>
-              {BRAND_SHORT}
-              <span style={{ color: 'var(--brand)' }}>.</span>
-            </span>
-          </a>
+    <header className="hdr">
+      <div className="wrap hdr__inner">
+        <Link to="/" className="brand" ariaLabel={`${BRAND} — página inicial`}>
+          <span className="brand__mark" aria-hidden="true">
+            <Icon name="ball" />
+          </span>
+          <span className="brand__text">
+            <span className="brand__name">{BRAND}</span>
+            <span className="brand__tag">Palpites e análises</span>
+          </span>
+        </Link>
 
-          <nav className="nav" aria-label="Navegação principal">
-            {links.map((link) => (
-              <a key={link.href} href={link.href} className="nav__link">
-                {link.label}
-              </a>
-            ))}
-          </nav>
+        <nav className="nav" aria-label="Seções da página">
+          {NAV.map((item) => (
+            <a className="nav__link" href={item.href} key={item.href}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
 
-          <div className="header__cta">
-            <button type="button" className="btn btn--primary btn--sm" onClick={() => onOpenLead('trimestral')}>
-              Quero entrar
-            </button>
-          </div>
-
-          <button
-            type="button"
-            className={`burger${open ? ' is-open' : ''}`}
-            aria-expanded={open}
-            aria-controls="menu-mobile"
-            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
-            onClick={() => setOpen((value) => !value)}
-          >
-            <span />
-            <span />
-            <span />
-          </button>
-        </div>
-      </div>
-
-      <div id="menu-mobile" className={`mobile-nav${open ? ' is-open' : ''}`}>
-        {links.map((link) => (
-          <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
-            {link.label}
-          </a>
-        ))}
-        <button
-          type="button"
-          className="btn btn--primary btn--block"
-          onClick={() => {
-            setOpen(false);
-            onOpenLead('trimestral');
-          }}
-        >
-          Quero entrar no grupo
-        </button>
+        <a className="btn btn--primary btn--sm hdr__cta" href={CHECKOUT_URL}>
+          {CTA_LABEL}
+        </a>
       </div>
     </header>
   );
