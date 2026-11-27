@@ -25,6 +25,23 @@ const base = `http://127.0.0.1:${PORT}`;
 
 const failures = [];
 
+/** Fecha o gate 18+ e o banner de cookies quando presentes. */
+async function dismissOverlays(page) {
+  const age = page.getByRole('button', { name: /Sim, tenho 18/ });
+  try {
+    await age.click({ timeout: 5000 });
+  } catch {
+    failures.push('gate 18+ não apareceu');
+  }
+
+  const cookie = page.getByRole('button', { name: /Somente essenciais/ });
+  try {
+    await cookie.click({ timeout: 4000 });
+  } catch {
+    failures.push('banner de cookies não apareceu');
+  }
+}
+
 async function main() {
   const { chromium } = (await import(PLAYWRIGHT)).default;
 
@@ -59,8 +76,7 @@ async function main() {
       page.on('pageerror', (e) => pageErrors.push(String(e)));
 
       await page.goto(`${base}/`, { waitUntil: 'domcontentloaded' });
-      await page.getByRole('button', { name: /Sim, tenho 18/ }).click();
-      await page.getByRole('button', { name: /Somente essenciais/ }).click();
+      await dismissOverlays(page);
       await page.waitForTimeout(300);
 
       const m = await page.evaluate(() => {
@@ -119,8 +135,7 @@ async function main() {
     for (const slug of ['privacidade', 'termos', 'cookies', 'jogo-responsavel']) {
       const page = await browser.newPage({ viewport: { width: 360, height: 900 } });
       await page.goto(`${base}/${slug}`, { waitUntil: 'domcontentloaded' });
-      await page.getByRole('button', { name: /Sim, tenho 18/ }).click();
-      await page.getByRole('button', { name: /Somente essenciais/ }).click();
+      await dismissOverlays(page);
       await page.waitForTimeout(200);
       const over = await page.evaluate(() => {
         const vw = document.documentElement.clientWidth;

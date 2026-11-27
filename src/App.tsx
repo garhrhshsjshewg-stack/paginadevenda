@@ -46,11 +46,21 @@ export default function App() {
   }
 
   if (route !== '/' && !legalDoc) {
-    return <LegalPage slug={slug} />;
+    return (
+      <>
+        <LegalPage slug={slug} />
+        <CookieConsent />
+      </>
+    );
   }
 
   if (legalDoc) {
-    return <LegalPage slug={legalDoc.slug} />;
+    return (
+      <>
+        <LegalPage slug={legalDoc.slug} />
+        <CookieConsent />
+      </>
+    );
   }
 
   return (
