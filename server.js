@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT) || 3000;
 const DIST = path.join(__dirname, 'dist');
 const DATA_DIR = path.join(__dirname, 'data');
-const APP_NAME = 'Nexo Palpites';
+const APP_NAME = 'Império VIP';
 
 const app = express();
 app.disable('x-powered-by');

@@ -1,8 +1,8 @@
-export const BRAND = 'Nexo Palpites';
-export const BRAND_SHORT = 'Nexo';
+export const BRAND = 'Império VIP';
+export const BRAND_SHORT = 'Império VIP';
 export const TAGLINE = 'Grupo de palpites e análises esportivas';
 
-export const SUPPORT_EMAIL = 'contato@nexopalpites.com.br';
+export const SUPPORT_EMAIL = 'contato@imperiovip.com.br';
 export const SUPPORT_WHATSAPP = '(11) 90000-0000';
 export const SUPPORT_HOURS = 'Seg a Sáb, 9h às 20h';
 
